@@ -2,9 +2,11 @@ from scapy.all import sniff, IP
 import pandas as pd
 from tkinter import *
 
+
 def capture_traffic(duration=10):
   packets = sniff(iface="Wi-Fi", count=100, timeout=duration)  # Replace "eth0" with your network interface
   return packets
+
 
 def analyze_packets(packets):
   data = []
