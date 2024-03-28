@@ -10,6 +10,10 @@ def packet_callback(packet):
             tcp_layer = packet.getlayer(TCP)
             print(f"TCP Port: {tcp_layer.sport} -> {tcp_layer.dport}")
 
+        if packet.haslayer(UDP):
+            udp_layer = packet.getlayer(UDP)
+            print(f"UDP Port: {udp_layer.sport} -> {udp_layer.dport}")
+
         if packet.haslayer(Raw):
             payload = packet.getlayer(Raw).load
             print(f"Payload: {payload}")
