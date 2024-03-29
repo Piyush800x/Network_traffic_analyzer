@@ -2,7 +2,6 @@ import os
 import sys
 from tkinter.ttk import Treeview, Scrollbar, Combobox, Frame
 from tkinter.ttk import Button as NewButton
-import tkinter as tk
 import threading
 import pyshark
 import re
@@ -14,8 +13,8 @@ from ttkthemes import ThemedTk
 
 load_dotenv()
 global adapter
-font_heading = ("Arial", 14)
-font_content = ("Arial", 12)
+font_heading = ("Source Code Pro", 14)
+font_content = ("Source Code Pro", 12)
 
 
 class GUI(Toplevel):
@@ -26,13 +25,14 @@ class GUI(Toplevel):
         self.protocol('WM_DELETE_WINDOW', lambda: [sys.exit(0)])
         self.ip_handler = ipinfo.getHandler(os.getenv("IPINFO_TOKEN"))
         self.capture = pyshark.LiveCapture(interface=f'{adapter}')
+        self.geometry("480x400")
 
         pattern = r"(\w+(?:\s\w+)*):\s*(.*)"
         self.data = {}
         self.regex = re.compile(pattern, re.MULTILINE)
 
-        self.frame_1 = Frame(self, width=500, height=300)
-        self.frame_1.pack()
+        self.new_label: Label = Label(self, text="Network Packet Analyzer", font=font_content)
+        self.new_label.pack()
 
         self.tree = Treeview(self, columns=("SRC", "DEST"), show="headings", height=300)
 
@@ -90,6 +90,7 @@ class GUI(Toplevel):
                         self.tree.yview_moveto(1.0)
                 except UnknownInterfaceException:
                     messagebox.showerror("NTA", "Wrong interface selected!\nTry again.")
+                    sys.exit(1)
         threading.Thread(target=update, daemon=True).start()
 
 
@@ -98,7 +99,7 @@ class PreWindow(ThemedTk):
     def __init__(self):
         super().__init__()
         self.title("Network Traffic Analyzer")
-        self.geometry("270x180")
+        self.geometry("290x180")
 
         adapter_var: StringVar = StringVar()
 
@@ -110,7 +111,8 @@ class PreWindow(ThemedTk):
         self.adapter_entry.current(0)
         self.adapter_entry.pack()
 
-        self.btn = NewButton(self, text="Start", command=lambda: [self.withdraw(), start(self.adapter_entry.get())])
+        self.btn: NewButton = NewButton(self, text="Start", command=lambda: [self.withdraw(), start(self.adapter_entry
+                                                                                                    .get())])
         self.btn.pack()
 
 
