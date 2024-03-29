@@ -11,3 +11,5 @@ tzdata==2024.1
 
 pyshark~=0.6
 ttkthemes~=3.2.2
+ipinfo~=5.0.1
+python-dotenv
