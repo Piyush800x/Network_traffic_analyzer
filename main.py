@@ -13,8 +13,10 @@ from ttkthemes import ThemedTk
 
 load_dotenv()
 global adapter
-font_heading = ("Source Code Pro", 14)
-font_content = ("Source Code Pro", 12)
+# font_heading = ("Source Code Pro", 14)
+# font_content = ("Source Code Pro", 12)
+font_heading = ("Poppins Regular", 18)
+font_content = ("Fira Code", 14)
 
 
 class GUI(Toplevel):
@@ -37,7 +39,7 @@ class GUI(Toplevel):
         self.menubar.add_cascade(label="File", menu=self.menu)
         self.menu.add_command(label="Close", command=lambda: sys.exit(0))
 
-        self.new_label: Label = Label(self, text="Network Packet Analyzer", font=font_content)
+        self.new_label: Label = Label(self, text="Network Traffic Analyzer", font=("Poppins Regular", 18))
         self.new_label.pack()
 
         self.tree = Treeview(self, columns=("SRC", "DEST"), show="headings", height=300)
