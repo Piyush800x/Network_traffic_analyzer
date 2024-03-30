@@ -7,7 +7,7 @@ import pyshark
 import re
 import ipinfo
 from dotenv import load_dotenv
-from tkinter import Toplevel, StringVar, Label, messagebox
+from tkinter import Toplevel, StringVar, Label, messagebox, Menu
 from pyshark.capture.live_capture import UnknownInterfaceException
 from ttkthemes import ThemedTk
 
@@ -25,19 +25,25 @@ class GUI(Toplevel):
         self.protocol('WM_DELETE_WINDOW', lambda: [sys.exit(0)])
         self.ip_handler = ipinfo.getHandler(os.getenv("IPINFO_TOKEN"))
         self.capture = pyshark.LiveCapture(interface=f'{adapter}')
-        self.geometry("480x400")
+        self.geometry("540x450")
+        self.iconbitmap("logo.ico")
 
         pattern = r"(\w+(?:\s\w+)*):\s*(.*)"
         self.data = {}
         self.regex = re.compile(pattern, re.MULTILINE)
+
+        self.menubar: Menu = Menu()
+        self.menu = Menu(self.menubar, tearoff=0)
+        self.menubar.add_cascade(label="File", menu=self.menu)
+        self.menu.add_command(label="Close", command=lambda: sys.exit(0))
 
         self.new_label: Label = Label(self, text="Network Packet Analyzer", font=font_content)
         self.new_label.pack()
 
         self.tree = Treeview(self, columns=("SRC", "DEST"), show="headings", height=300)
 
-        self.tree.heading("SRC", text="SRC")
-        self.tree.heading("DEST", text="DEST")
+        self.tree.heading("SRC", text="Source IP")
+        self.tree.heading("DEST", text="Destination IP")
 
         self.tree.column("SRC", width=100)
         self.tree.column("DEST", width=100)
@@ -48,6 +54,7 @@ class GUI(Toplevel):
         self.scrollbar.pack(side="right", fill="y")
         self.tree.tag_configure("my_font", font=font_content)
         self.tree.configure(yscrollcommand=self.scrollbar.set)
+        self.config(menu=self.menubar)
 
         self.update_data()
 
@@ -55,7 +62,7 @@ class GUI(Toplevel):
         def update():
             while True:
                 try:
-                    for packet in self.capture.sniff_continuously(packet_count=10):
+                    for packet in self.capture.sniff_continuously(packet_count=30):
                         packet_str = f"{packet[1]}"
 
                         matches = self.regex.findall(packet_str)
@@ -100,6 +107,7 @@ class PreWindow(ThemedTk):
         super().__init__()
         self.title("Network Traffic Analyzer")
         self.geometry("290x180")
+        self.iconbitmap("logo.ico")
 
         adapter_var: StringVar = StringVar()
 
