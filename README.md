@@ -34,6 +34,12 @@ If you have any feedback, please reach out to us at shibammitra695@gmail.com or 
 
 ## Run Locally 🏃‍♀️
 
+NOTE: You need to have Wireshark installed to run this project
+Download from here:
+```bash
+  https://www.wireshark.org/download.html
+```
+
 Clone the project
 
 ```bash
