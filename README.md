@@ -1,11 +1,10 @@
 
-![Logo](https://www.gecomputers.com/wp-content/uploads/elementor/thumbs/What-is-advanced-endpoint-protection-and-why-is-it-important-2-q9elxdtx6947bdzxfcqdr7own3rgrur7adv5p32zrc.png)
+![Logo](Present.gif)
 
 
 # Network Traffic Analyzer 📡
 
 A complete network analyzer tool which scans the outgoing and incoming network packets with precise source and destination IP along with the hostname.
-
 
 
 ## Authors 👩‍💻
@@ -34,8 +33,7 @@ If you have any feedback, please reach out to us at shibammitra695@gmail.com or 
 
 ## Run Locally 🏃‍♀️
 
-NOTE: You need to have Wireshark installed to run this project
-Download from here:
+NOTE: You need to have Wireshark installed to run this project, Download from here:
 ```bash
   https://www.wireshark.org/download.html
 ```
